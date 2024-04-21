@@ -2,7 +2,29 @@
 .example-spacer {
   flex: 1 1 auto;
 }
+.action-buttons {
+  margin-left: 30px;
+}
+.example-table {
+  margin-left: 30px;
+}
 
-.table {
-  width: 50%;
+.button-container1 {
+  padding: 20px;
+  display: flex;
+  justify-content: end;
+  align-items: center;
+
+  button {
+    transition: transform 0.3s ease;
+
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+}
+
+.mat-elevation-z8 {
+  // Maximum width of the table container
+  margin: auto;
 }

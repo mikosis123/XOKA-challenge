@@ -1,40 +1,107 @@
-import { Component } from '@angular/core';
+import { Component, ViewEncapsulation } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatTableModule, MatTableDataSource } from '@angular/material/table';
-import { AfterViewInit, ViewChild } from '@angular/core';
+import { ViewChild } from '@angular/core';
 import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatCardModule } from '@angular/material/card';
+import { MatInputModule } from '@angular/material/input';
+import { FormBuilder, ReactiveFormsModule } from '@angular/forms';
+import { MasterService } from './service/master.service';
+import { CommonModule } from '@angular/common';
 
 export interface PeriodicElement {
-  name: string;
-  position: number;
-  weight: number;
-  symbol: string;
+  id: number;
+  employeeName: string;
+  candidateName: string;
+  company: string;
+  department: string;
+  salary: string;
+  JobTitle: string;
+  employmentStatus: string;
+  education: string;
 }
 
 const ELEMENT_DATA: PeriodicElement[] = [
-  { position: 1, name: 'Hydrogen', weight: 1.0079, symbol: 'H' },
-  { position: 2, name: 'Helium', weight: 4.0026, symbol: 'He' },
-  { position: 3, name: 'Lithium', weight: 6.941, symbol: 'Li' },
-  { position: 4, name: 'Beryllium', weight: 9.0122, symbol: 'Be' },
-  { position: 5, name: 'Boron', weight: 10.811, symbol: 'B' },
-  { position: 6, name: 'Carbon', weight: 12.0107, symbol: 'C' },
-  { position: 7, name: 'Nitrogen', weight: 14.0067, symbol: 'N' },
-  { position: 8, name: 'Oxygen', weight: 15.9994, symbol: 'O' },
-  { position: 9, name: 'Fluorine', weight: 18.9984, symbol: 'F' },
-  { position: 10, name: 'Neon', weight: 20.1797, symbol: 'Ne' },
-  { position: 11, name: 'Sodium', weight: 22.9897, symbol: 'Na' },
-  { position: 12, name: 'Magnesium', weight: 24.305, symbol: 'Mg' },
-  { position: 13, name: 'Aluminum', weight: 26.9815, symbol: 'Al' },
-  { position: 14, name: 'Silicon', weight: 28.0855, symbol: 'Si' },
-  { position: 15, name: 'Phosphorus', weight: 30.9738, symbol: 'P' },
-  { position: 16, name: 'Sulfur', weight: 32.065, symbol: 'S' },
-  { position: 17, name: 'Chlorine', weight: 35.453, symbol: 'Cl' },
-  { position: 18, name: 'Argon', weight: 39.948, symbol: 'Ar' },
-  { position: 19, name: 'Potassium', weight: 39.0983, symbol: 'K' },
-  { position: 20, name: 'Calcium', weight: 40.078, symbol: 'Ca' },
+  {
+    id: 1,
+    employeeName: 'John Doe',
+    candidateName: 'Jane Smith',
+    company: 'Tech Innovations Inc.',
+    department: 'Research and Development',
+    salary: '90000',
+    JobTitle: 'Lead Researcher',
+    employmentStatus: 'Full-time',
+    education: 'PhD in Computer Science',
+  },
+  {
+    id: 2,
+    employeeName: 'John Doe',
+    candidateName: 'Jane Smith',
+    company: 'Tech Innovations Inc.',
+    department: 'Research and Development',
+    salary: '90000',
+    JobTitle: 'Lead Researcher',
+    employmentStatus: 'Full-time',
+    education: 'PhD in Computer Science',
+  },
+  {
+    id: 3,
+    employeeName: 'John Doe',
+    candidateName: 'Jane Smith',
+    company: 'Tech Innovations Inc.',
+    department: 'Research and Development',
+    salary: '90000',
+    JobTitle: 'Lead Researcher',
+    employmentStatus: 'Full-time',
+    education: 'PhD in Computer Science',
+  },
+  {
+    id: 4,
+    employeeName: 'John Doe',
+    candidateName: 'Jane Smith',
+    company: 'Tech Innovations Inc.',
+    department: 'Research and Development',
+    salary: '90000',
+    JobTitle: 'Lead Researcher',
+    employmentStatus: 'Full-time',
+    education: 'PhD in Computer Science',
+  },
+  {
+    id: 5,
+    employeeName: 'John Doe',
+    candidateName: 'Jane Smith',
+    company: 'Tech Innovations Inc.',
+    department: 'Research and Development',
+    salary: '90000',
+    JobTitle: 'Lead Researcher',
+    employmentStatus: 'Full-time',
+    education: 'PhD in Computer Science',
+  },
+  {
+    id: 6,
+    employeeName: 'John Doe',
+    candidateName: 'Jane Smith',
+    company: 'Tech Innovations Inc.',
+    department: 'Research and Development',
+    salary: '90000',
+    JobTitle: 'Lead Researcher',
+    employmentStatus: 'Full-time',
+    education: 'PhD in Computer Science',
+  },
+  {
+    id: 7,
+    employeeName: 'John Doe',
+    candidateName: 'Jane Smith',
+    company: 'Tech Innovations Inc.',
+    department: 'Research and Development',
+    salary: '90000',
+    JobTitle: 'Lead Researcher',
+    employmentStatus: 'Full-time',
+    education: 'PhD in Computer Science',
+  },
 ];
 
 @Component({
@@ -47,13 +114,42 @@ const ELEMENT_DATA: PeriodicElement[] = [
     MatButtonModule,
     MatTableModule,
     MatPaginatorModule,
+    MatCardModule,
+    MatInputModule,
+    ReactiveFormsModule,
+    CommonModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
+  encapsulation: ViewEncapsulation.None,
 })
 export class AppComponent {
   title = 'zokra-projuct';
-  displayedColumns: string[] = ['position', 'name', 'weight', 'symbol'];
+  displayedColumns: string[] = [
+    'id',
+    'employeeName',
+    'candidateName',
+    'company',
+    'department',
+    'salary',
+    'employmentStatus',
+    'education',
+    'action',
+  ];
+  constructor(private service: MasterService, private builder: FormBuilder) {}
+
+  EmployeeForm = this.builder.group({
+    id: this.builder.control(0),
+    employeeName: [''],
+    company: [''],
+    department: [''],
+    salary: this.builder.control(3000),
+    JobTitle: [''],
+    employmentStatus: [''],
+    education: [''],
+  });
+  isadd = false;
+  isedit = false;
   dataSource = new MatTableDataSource<PeriodicElement>(ELEMENT_DATA);
 
   @ViewChild(MatPaginator) paginator: MatPaginator | null = null;
@@ -64,5 +160,16 @@ export class AppComponent {
     } else {
       console.error('Paginator is not available.');
     }
+  }
+
+  editEmployee(id: number) {
+    console.log('Edit Employee:', id);
+  }
+  delateEmployee(id: number) {
+    console.log('Delete Employee:', id);
+  }
+  saveEmployee() {}
+  addEmployee() {
+    this.isadd = true;
   }
 }
