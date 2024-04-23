@@ -1,9 +1,11 @@
 export interface employee {
   id: number;
-  name: string;
-  position: string;
-  age: number;
-  gender: string;
+  employeeName: string;
+  company: string;
   department: string;
   salary: string;
+  jobTitle: string;
+  employmentStatus: string;
+  education: string;
+  date: string;
 }

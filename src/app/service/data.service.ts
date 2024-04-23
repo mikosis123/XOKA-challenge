@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { InMemoryDbService, RequestInfo } from 'angular-in-memory-web-api';
+import { InMemoryDbService } from 'angular-in-memory-web-api';
+import { employee } from '../model/employeeModel';
 import { Observable } from 'rxjs';
-
 @Injectable({
   providedIn: 'root',
 })
@@ -9,35 +9,81 @@ export class DataService implements InMemoryDbService {
   constructor() {}
   createDb(): {} | Observable<{}> | Promise<{}> {
     return {
-      employees: [
+      employee: [
         {
           id: 1,
-          name: 'miko',
-          age: 25,
-          gender: 'male',
-          salary: 5000,
-          position: 'manager',
-          department: 'IT',
+          employeeName: 'John Doe',
+
+          company: 'Tech Innovations Inc.',
+          department: 'Research and Development',
+          salary: '90000',
+          jobTitle: 'Lead Researcher',
+          employmentStatus: 'Full-time',
+          education: 'PhD in Computer Science',
+          date: ' 20 / 15 / 24',
         },
         {
           id: 2,
-          name: 'sis',
-          age: 25,
-          gender: 'male',
-          salary: 5000,
-          position: 'manager',
-          department: 'IT',
+          employeeName: 'John Doe',
+          company: 'Tech Innovations Inc.',
+          department: 'Research and Development',
+          salary: '90000',
+          jobTitle: 'Lead Researcher',
+          employmentStatus: 'Full-time',
+          education: 'PhD in Computer Science',
+          date: ' 20 / 15 / 24',
         },
         {
           id: 3,
-          name: 'mena',
-          age: 25,
-          gender: 'male',
-          salary: 5000,
-          position: 'manager',
-          department: 'IT',
+          employeeName: 'John Doe',
+          company: 'Tech Innovations Inc.',
+          department: 'Research and Development',
+          salary: '90000',
+          jobTitle: 'Lead Researcher',
+          employmentStatus: 'Full-time',
+          education: 'PhD in Computer Science',
+          date: ' 20 / 15 / 24',
+        },
+        {
+          id: 4,
+          employeeName: 'John Doe',
+
+          company: 'Tech Innovations Inc.',
+          department: 'Research and Development',
+          salary: '90000',
+          jobTitle: 'Lead Researcher',
+          employmentStatus: 'Full-time',
+          education: 'PhD in Computer Science',
+          date: ' 20 / 15 / 24',
+        },
+        {
+          id: 5,
+          employeeName: 'John Doe',
+          company: 'Tech Innovations Inc.',
+          department: 'Research and Development',
+          salary: '90000',
+          jobTitle: 'Lead Researcher',
+          employmentStatus: 'Full-time',
+          education: 'PhD in Computer Science',
+          date: ' 20 / 15 / 24',
+        },
+        {
+          id: 6,
+          employeeName: 'John Doe',
+          company: 'Tech Innovations Inc.',
+          department: 'Research and Development',
+          salary: '90000',
+          jobTitle: 'Lead Researcher',
+          employmentStatus: 'Full-time',
+          education: 'PhD in Computer Science',
+          date: ' 20 / 15 / 24',
         },
       ],
     };
+  }
+  genId(employee: employee[]): number {
+    return employee.length > 0
+      ? Math.max(...employee.map((hero) => hero.id)) + 1
+      : 11;
   }
 }

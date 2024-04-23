@@ -5,9 +5,9 @@
 .action-buttons {
   margin-left: 30px;
 }
-.example-table {
-  margin-left: 30px;
-}
+// .example-table {
+//   margin-left: 10px;
+// }
 
 .button-container1 {
   padding: 20px;
@@ -26,5 +26,11 @@
 
 .mat-elevation-z8 {
   // Maximum width of the table container
+  max-width: fit-content;
   margin: auto;
+}
+.add-form {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
