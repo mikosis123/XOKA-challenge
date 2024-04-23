@@ -13,24 +13,26 @@ import {
   FormGroup,
   ReactiveFormsModule,
   Validators,
+  FormsModule,
 } from '@angular/forms';
 
-import { MasterService } from './service/master.service';
+import { MatSnackBar } from '@angular/material/snack-bar';
+import { MasterService, NotificationService } from './service/master.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatNativeDateModule } from '@angular/material/core';
 import { HttpClientModule } from '@angular/common/http';
-
 import { employee } from './model/employeeModel';
-import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
-import { DataService } from './service/data.service';
+import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-root',
   standalone: true,
   imports: [
     HttpClientModule,
+    MatSelectModule,
     RouterOutlet,
     MatToolbarModule,
     MatIconModule,
@@ -44,6 +46,8 @@ import { DataService } from './service/data.service';
     MatFormFieldModule,
     MatDatepickerModule,
     MatNativeDateModule,
+    FormsModule,
+    MatSnackBarModule,
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.scss',
@@ -54,13 +58,13 @@ export class AppComponent implements OnInit {
   displayedColumns: string[] = [
     'id',
     'employeeName',
-    'company',
+    'email',
     'department',
     'salary',
     'employmentStatus',
     'education',
-    'action',
     'date',
+    'action',
   ];
   dataSource = new MatTableDataSource<employee>();
   employeeForm: FormGroup;
@@ -72,12 +76,13 @@ export class AppComponent implements OnInit {
 
   constructor(
     private service: MasterService,
-    private formBuilder: FormBuilder
+    private formBuilder: FormBuilder,
+    private snackbar: MatSnackBar
   ) {
     this.employeeForm = this.formBuilder.group({
       id: ['', Validators.required],
-      employeeName: ['', Validators.required],
-      company: [''],
+      employeeName: ['', [Validators.required]],
+      email: [''],
       department: [''],
       salary: [''],
       jobTitle: [''],
@@ -96,7 +101,10 @@ export class AppComponent implements OnInit {
     });
     console.log(this.dataSource.data);
   }
-
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+  }
   fetchAllEmployees() {
     this.service.getallemployee().subscribe(
       (data) => {
@@ -108,19 +116,6 @@ export class AppComponent implements OnInit {
     );
   }
 
-  // addEmployee() {
-  //   if (this.employeeForm.valid) {
-  //     const newEmployee = this.employeeForm.value;
-  //     this.service.Createemployee(newEmployee).subscribe(
-  //       (data) => {
-  //         console.log('Employee added:', data);
-  //         this.fetchAllEmployees(); // Refresh the list
-  //       },
-  //       (error) => console.error('Error creating employee:', error)
-  //     );
-  //   }
-  //   this.isAdd = !this.isAdd;
-  // }
   onSubmit() {
     if (this.employeeForm.valid) {
       if (this.isEdit) {
@@ -128,20 +123,28 @@ export class AppComponent implements OnInit {
         this.service.Updateemployee(this.employeeForm.value).subscribe({
           next: () => {
             console.log('Employee updated');
-            this.fetchAllEmployees(); // Refresh the list after update.
-            this.employeeForm.reset(); // Reset the form after submission.
-            this.isEdit = false; // Reset the edit flag.
+            this.fetchAllEmployees();
+            this.employeeForm.reset();
+            this.isAdd = false;
+            this.isEdit = false;
+            this.snackbar.open('Employee updated successfully', 'Close', {
+              duration: 3000,
+            });
           },
+
           error: (error) => console.error('Error updating employee:', error),
         });
       } else {
-        // Call the create service method if adding a new employee.
         this.service.Createemployee(this.employeeForm.value).subscribe({
           next: () => {
             console.log('Employee added');
-            this.fetchAllEmployees(); // Refresh the list after adding.
-            this.employeeForm.reset(); // Reset the form after submission.
-            this.isAdd = false; // Reset the add flag.
+            this.fetchAllEmployees();
+            this.employeeForm.reset();
+            this.isAdd = false;
+            this.isEdit = false;
+            this.snackbar.open('Employee added successfully', 'Close', {
+              duration: 3000,
+            });
           },
           error: (error) => console.error('Error adding employee:', error),
         });
@@ -152,13 +155,13 @@ export class AppComponent implements OnInit {
   }
 
   editEmployee(employee: employee) {
-    console.log('Editing employee:', employee); // Debug: log the employee data
+    console.log('Editing employee:', employee);
     this.isEdit = true;
 
     this.employeeForm.setValue({
       id: employee.id,
       employeeName: employee.employeeName,
-      company: employee.company,
+      email: employee.email,
       department: employee.department,
       salary: employee.salary,
       jobTitle: employee.jobTitle,
@@ -167,13 +170,18 @@ export class AppComponent implements OnInit {
       date: employee.date,
     });
 
-    this.isAdd = false;
     this.isEdit = true;
 
-    console.log('Form Value after setting:', this.employeeForm.value); // Debug: log form values
+    console.log('Form Value after setting:', this.employeeForm.value);
   }
   addEmployee() {
+    this.employeeForm.reset();
+
     this.isAdd = true;
+    this.isEdit = false;
+  }
+  backtolist() {
+    this.isAdd = false;
     this.isEdit = false;
   }
   deleteEmployee(employeeId: number) {

@@ -7,6 +7,7 @@ import { provideAnimationsAsync } from '@angular/platform-browser/animations/asy
 import { provideHttpClient, withFetch } from '@angular/common/http';
 import { HttpClientInMemoryWebApiModule } from 'angular-in-memory-web-api';
 import { DataService } from './service/data.service';
+import { ErrorStateMatcher } from '@angular/material/core';
 
 export const appConfig: ApplicationConfig = {
   providers: [
