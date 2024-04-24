@@ -1,13 +1,13 @@
 @import "@angular/material/prebuilt-themes/indigo-pink.css";
+body {
+  background: white;
+}
 .example-spacer {
   flex: 1 1 auto;
 }
 .action-buttons {
   margin-left: 30px;
 }
-// .example-table {
-//   margin-left: 10px;
-// }
 
 .button-container1 {
   padding: 20px;
@@ -24,9 +24,10 @@
     }
   }
 }
-
+.mat-focused .mat-form-field-outline-thick {
+  color: #009688; /* Teal color, for example */
+}
 .mat-elevation-z8 {
-  // Maximum width of the table container
   max-width: fit-content;
   width: 89%;
   margin: auto;

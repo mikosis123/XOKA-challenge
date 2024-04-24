@@ -17,7 +17,7 @@ import {
 } from '@angular/forms';
 
 import { MatSnackBar } from '@angular/material/snack-bar';
-import { MasterService, NotificationService } from './service/master.service';
+import { MasterService } from './service/master.service';
 import { CommonModule } from '@angular/common';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatDatepickerModule } from '@angular/material/datepicker';
@@ -80,12 +80,12 @@ export class AppComponent implements OnInit {
     private snackbar: MatSnackBar
   ) {
     this.employeeForm = this.formBuilder.group({
-      id: ['', Validators.required],
+      id: [''],
       employeeName: ['', [Validators.required]],
-      email: [''],
-      department: [''],
+      email: ['', [Validators.required]],
+      department: ['', [Validators.required]],
       salary: [''],
-      jobTitle: [''],
+      jobTitle: ['', [Validators.required]],
       employmentStatus: [''],
       education: [''],
       date: [''],
