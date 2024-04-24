@@ -188,7 +188,10 @@ export class AppComponent implements OnInit {
     this.service.Deleteemployee(employeeId).subscribe(
       () => {
         console.log('Employee deleted:', employeeId);
-        this.fetchAllEmployees(); // Refresh the list
+        this.fetchAllEmployees();
+        this.snackbar.open('Employee fired successfully', 'Close', {
+          duration: 3000,
+        });
       },
       (error) => console.error('Error deleting employee:', error)
     );
